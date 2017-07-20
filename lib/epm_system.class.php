@@ -154,17 +154,17 @@ class epm_system {
         set_time_limit(0);
         $headers = get_headers($url_file, 1);
         $size = $headers['Content-Length'];
-        $randnumid = trim(mt_rand(1000000000,100000000000000).$pid);
 
-				$dir = dirname($destination_file);
-				if(!file_exists($dir)) {
-					mkdir($dir);
-				}
+	$dir = dirname($destination_file);
+	if(!file_exists($dir)) {
+		mkdir($dir);
+	}
 
         if (preg_match('/200/', $headers[0])) {
 					dbug("wget --no-cache " . $url_file . " -O " . $destination_file);
             $pid = $this->run_in_background("wget --no-cache " . $url_file . " -O " . $destination_file);
-
+            $randnumid = trim(mt_rand(1000000000,100000000000000).$pid);
+		
             echo sprintf("<div>"._("Downloading %s ...")."</div>", basename($destination_file));
 			echo sprintf("<div id='DivProgressBar_%d' class='progress' style='width:100%%'>", $randnumid);
 			echo "<div class='progress-bar progress-bar-striped' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style='width:0%'>0% ("._("Complete").")</div>";
